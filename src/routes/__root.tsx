@@ -15,20 +15,6 @@ import { clientEnv } from "@/lib/env/client.env";
 import { getLocale } from "@/paraglide/runtime";
 import appCss from "@/styles.css?url";
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "amp-auto-ads": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      > & {
-        type?: string;
-        "data-ad-client"?: string;
-      };
-    }
-  }
-}
-
 interface MyRouterContext {
   queryClient: QueryClient;
 }
@@ -111,22 +97,15 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
           href: "/feed.json",
         },
       ],
-      scripts: [
-        ...(env.VITE_UMAMI_WEBSITE_ID
-          ? [
-              {
-                src: "/stats.js",
-                defer: true,
-                "data-website-id": env.VITE_UMAMI_WEBSITE_ID,
-              },
-            ]
-          : []),
-        {
-          async: true,
-          "custom-element": "amp-auto-ads",
-          src: "https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js",
-        },
-      ],
+      scripts: env.VITE_UMAMI_WEBSITE_ID
+        ? [
+            {
+              src: "/stats.js",
+              defer: true,
+              "data-website-id": env.VITE_UMAMI_WEBSITE_ID,
+            },
+          ]
+        : [],
     };
   },
   shellComponent: RootDocument,
@@ -146,11 +125,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <amp-auto-ads
-          type="adsense"
-          data-ad-client="ca-pub-9321286679189360"
-        ></amp-auto-ads>
-        
         <ThemeProvider>{children}</ThemeProvider>
         <TanStackDevtools
           config={{
