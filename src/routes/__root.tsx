@@ -97,15 +97,24 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
           href: "/feed.json",
         },
       ],
-      scripts: env.VITE_UMAMI_WEBSITE_ID
-        ? [
-            {
-              src: "/stats.js",
-              defer: true,
-              "data-website-id": env.VITE_UMAMI_WEBSITE_ID,
-            },
-          ]
-        : [],
+      scripts: [
+        // Google AdSense 脚本（已插入 <head>）
+        {
+          src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9321286679189360",
+          async: true,
+          crossorigin: "anonymous",
+        },
+        // 保留原来的 Umami 统计脚本（条件加载）
+        ...(env.VITE_UMAMI_WEBSITE_ID
+          ? [
+              {
+                src: "/stats.js",
+                defer: true,
+                "data-website-id": env.VITE_UMAMI_WEBSITE_ID,
+              },
+            ]
+          : []),
+      ],
     };
   },
   shellComponent: RootDocument,
