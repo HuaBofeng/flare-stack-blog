@@ -218,7 +218,7 @@ Flare Stack Blog 的所有面向用户的页面与布局均通过 **主题契约
 | `UMAMI_SRC`               | 运行时 | Umami 客户端埋点代理 URL（如 `https://cloud.umami.is`）                                                   |
 | `VITE_UMAMI_WEBSITE_ID`   | 构建时 | Umami Website ID（客户端埋点）                                                                            |
 
----
+---.
 
 ## 本地开发
 
