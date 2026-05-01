@@ -98,19 +98,17 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         },
       ],
       scripts: [
-        // Google AdSense 常规脚本（之前已添加）
+        // 你的 Google AdSense 脚本已通过对象形式配置在此处
         {
           src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9321286679189360",
           async: true,
-          crossorigin: "anonymous",
+          crossOrigin: "anonymous",
         },
-        // 新增：AMP 自动广告所需脚本（放在 <head> 中）
         {
           async: true,
           "custom-element": "amp-auto-ads",
           src: "https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js",
         },
-        // 保留原来的 Umami 统计脚本（条件加载）
         ...(env.VITE_UMAMI_WEBSITE_ID
           ? [
               {
@@ -140,7 +138,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {/* AMP 自动广告代码 - 紧跟在 <body> 标记之后（Google 官方要求） */}
         <amp-auto-ads
           type="adsense"
           data-ad-client="ca-pub-9321286679189360"
